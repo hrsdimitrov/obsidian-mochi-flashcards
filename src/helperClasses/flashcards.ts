@@ -1,5 +1,5 @@
 import ObsidianMochiPlugin from "src/main";
-
+import { Notice } from "obsidian";
 export default class Flashcards {
 	private plugin: ObsidianMochiPlugin;
 
@@ -72,5 +72,50 @@ export default class Flashcards {
 		}
 
 		return id;
+	}
+
+	async extractFlashcardsFromFile(markdown: string) {
+		var flashcards = [];
+		var deckName = await this.extractDeckName(markdown);
+		var markdownMatches = markdown.match(/\(!#\d*\).*/g);
+
+		if (markdownMatches === null) return [];
+
+		for (const flashcardMatch of markdownMatches) {
+			var id, content;
+			var idMatch = flashcardMatch.match(/(?<=\(!#)\d*/);
+			var contentMatch = flashcardMatch.match(/(?<=\)).*/);
+
+			if (idMatch === null || contentMatch === null) {
+				new Notice(
+					"An invalid flashcard was found in one of your files. It will not be added to the flashcards database."
+				);
+				continue;
+			}
+
+			id = parseInt(idMatch[0]);
+			content = contentMatch[0];
+
+			var splitContent = content.split("::");
+
+			if (splitContent.length === 1) {
+				new Notice(
+					"An invalid flashcard was found in one of your files. It will not be added to the flashcards database."
+				);
+				continue;
+			}
+
+			var question = splitContent[0].trim();
+			var answer = splitContent[1].trim();
+
+			flashcards.push({
+				id: id,
+				deckName: deckName,
+				question: question,
+				answer: answer,
+			});
+		}
+
+		return flashcards;
 	}
 }
