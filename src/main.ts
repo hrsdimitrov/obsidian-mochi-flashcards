@@ -1,10 +1,13 @@
 import { Editor, MarkdownView, Notice, Plugin } from "obsidian";
 import { DBData, PluginSettingsFields } from "./interfaces";
 import PluginSettings, { DEFAULT_SETTINGS } from "./helperClasses/settings";
+import { Low } from "lowdb";
+
+// helper classes
 import Flashcards from "./helperClasses/flashcards";
 import Mochi from "./helperClasses/mochi";
 import DBAdapter from "./helperClasses/db";
-import { Low } from "lowdb";
+import Commands from "./helperClasses/commands";
 
 export const dbName = "obsidian-mochi-plugin.db";
 export const dbPath = ".obsidian/";
@@ -14,6 +17,7 @@ export default class ObsidianMochiPlugin extends Plugin {
 	flashcards: Flashcards;
 	mochi: Mochi;
 	db: Low<DBData>;
+	commands: Commands;
 
 	async onload() {
 		await this.loadSettings();
@@ -25,16 +29,10 @@ export default class ObsidianMochiPlugin extends Plugin {
 
 		this.flashcards = new Flashcards(this);
 		this.mochi = new Mochi(this);
+		this.commands = new Commands();
 
 		// add commands
-		this.addCommand({
-			id: "sample-editor-command",
-			name: "Sample editor command",
-			editorCallback: (editor: Editor, view: MarkdownView) => {
-				console.log(editor.getSelection());
-				editor.replaceSelection("Sample Editor Command");
-			},
-		});
+		this.addCommand(this.commands.addSingleLineFlashcard);
 
 		// add events
 
