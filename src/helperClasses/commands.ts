@@ -34,6 +34,7 @@ export default class Commands {
 
 			this.plugin.flashcards.createFlashcard(
 				id,
+                currentFile.path,
 				deckName,
 				"Question",
 				"Answer"

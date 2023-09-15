@@ -13,8 +13,16 @@ export default class Events {
 			if (currentFile === null) return;
 			const markdown = await this.plugin.app.vault.read(currentFile);
 
-			console.log(
-				await this.plugin.flashcards.extractFlashcardsFromFile(markdown)
+			var newFlashcards =
+				await this.plugin.flashcards.extractFlashcardsFromFile(
+					currentFile.path,
+					markdown
+				);
+			this.plugin.flashcards.handleFlashcardsModification(
+				currentFile.path,
+				newFlashcards
 			);
+
+			console.log(this.plugin.db.data);
 		});
 }

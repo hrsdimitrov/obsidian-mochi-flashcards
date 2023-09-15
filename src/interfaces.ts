@@ -3,15 +3,24 @@ export interface PluginSettingsFields {
 	defaultDeckName: string;
 }
 
+export interface ExtractedFlashcard {
+	id: number;
+	filePath: string;
+	deckName: string;
+	question: string;
+	answer: string;
+}
+
 export interface Flashcard {
-    id: number;
-    mochiId: string;
-    deckName: string;
-    question: string;
-    answer: string;
+	id: number;
+	filePath: string;
+	mochiId: string;
+	deckName: string;
+	question: string;
+	answer: string;
 }
 
 export interface DBData {
-    flashcards: Flashcard[];
-    ids: number[];
+	flashcards: Flashcard[];
+	ids: number[];
 }
