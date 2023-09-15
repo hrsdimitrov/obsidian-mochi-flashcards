@@ -13,9 +13,31 @@ export default class Commands {
 		name: "Add a single-line flashcard",
 
 		editorCallback: async (editor: Editor, view: MarkdownView) => {
-			var id = await this.plugin.flashcards.generateFlashcardId();
+			// get the markdown of the current file
+			const currentFile = view.app.workspace.getActiveFile();
+			if (currentFile === null) return;
+			const markdown = await view.app.vault.read(currentFile);
 
-			editor.replaceSelection("(!#" + id + ") Question :: Answer ");
+			var id = await this.plugin.flashcards.generateFlashcardId();
+			var deckName = await this.plugin.flashcards.extractDeckName(
+				markdown
+			);
+
+			var flashcardContent = "(!#" + id + ") Question :: Answer";
+
+			var selectionLine = editor.getLine(editor.getCursor().line);
+			if (selectionLine.match(/\(!#\d*\)/) !== null) {
+				flashcardContent = "\n" + flashcardContent;
+			}
+
+			editor.replaceSelection(flashcardContent);
+
+			this.plugin.flashcards.createFlashcard(
+				id,
+				deckName,
+				"Question",
+				"Answer"
+			);
 		},
 	};
 }

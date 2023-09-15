@@ -7,6 +7,36 @@ export default class Flashcards {
 		this.plugin = plugin;
 	}
 
+	async extractDeckName(markdown: string) {
+		await this.plugin.loadData();
+		const deckName = this.plugin.settings.defaultDeckName;
+
+		var customDeckName = markdown.match(/(?<=f-deck:).*/);
+		if (customDeckName === null) return deckName;
+
+		return customDeckName[0];
+	}
+
+	async createFlashcard(
+		id: number,
+		deckName: string,
+		question: string,
+		answer: string
+	) {
+		this.plugin.db.data.flashcards.push({
+			mochiId: "",
+			id: id,
+			deckName: deckName,
+			question: question,
+			answer: answer,
+		});
+		this.plugin.db.data.ids.push(id);
+
+		await this.plugin.db.write();
+		await this.sortIds();
+		await this.plugin.db.read();
+	}
+
 	async sortIds() {
 		await this.plugin.db.read();
 
@@ -40,11 +70,6 @@ export default class Flashcards {
 				break;
 			}
 		}
-
-		this.plugin.db.data.ids.push(id);
-
-		await this.plugin.db.write();
-		await this.sortIds();
 
 		return id;
 	}
