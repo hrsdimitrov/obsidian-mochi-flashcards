@@ -8,6 +8,7 @@ import Flashcards from "./helperClasses/flashcards";
 import Mochi from "./helperClasses/mochi";
 import DBAdapter from "./helperClasses/db";
 import Commands from "./helperClasses/commands";
+import Events from "./helperClasses/events";
 
 export const dbName = "obsidian-mochi-plugin.db";
 export const dbPath = ".obsidian/";
@@ -18,6 +19,7 @@ export default class ObsidianMochiPlugin extends Plugin {
 	mochi: Mochi;
 	db: Low<DBData>;
 	commands: Commands;
+	events: Events;
 
 	async onload() {
 		await this.loadSettings();
@@ -30,6 +32,7 @@ export default class ObsidianMochiPlugin extends Plugin {
 		this.flashcards = new Flashcards(this);
 		this.mochi = new Mochi(this);
 		this.commands = new Commands(this);
+		this.events = new Events(this);
 
 		// add commands
 		this.addCommand(this.commands.addSingleLineFlashcard);
