@@ -29,7 +29,7 @@ export default class ObsidianMochiPlugin extends Plugin {
 
 		this.flashcards = new Flashcards(this);
 		this.mochi = new Mochi(this);
-		this.commands = new Commands();
+		this.commands = new Commands(this);
 
 		// add commands
 		this.addCommand(this.commands.addSingleLineFlashcard);
