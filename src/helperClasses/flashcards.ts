@@ -25,8 +25,14 @@ export default class Flashcards {
 		question: string,
 		answer: string
 	) {
+		var mochiId = await this.plugin.mochi.createMochiFlashcard(
+			deckName,
+			question,
+			answer
+		);
+
 		this.plugin.db.data.flashcards.push({
-			mochiId: "",
+			mochiId: mochiId,
 			filePath: filePath,
 			id: id,
 			deckName: deckName,

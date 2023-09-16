@@ -22,7 +22,7 @@ export default class Events {
 				currentFile.path,
 				newFlashcards
 			);
-
+			await this.plugin.db.read();
 			console.log(this.plugin.db.data);
 		});
 }
