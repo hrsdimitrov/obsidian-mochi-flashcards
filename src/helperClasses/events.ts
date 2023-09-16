@@ -18,7 +18,7 @@ export default class Events {
 					currentFile.path,
 					markdown
 				);
-			this.plugin.flashcards.handleFlashcardsModification(
+			await this.plugin.flashcards.handleFlashcardsModification(
 				currentFile.path,
 				newFlashcards
 			);
