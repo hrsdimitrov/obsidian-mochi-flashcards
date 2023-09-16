@@ -1,5 +1,4 @@
 import ObsidianMochiPlugin from "src/main";
-import Flashcards from "./flashcards";
 
 export default class Events {
 	private plugin: ObsidianMochiPlugin;

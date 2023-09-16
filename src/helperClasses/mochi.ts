@@ -1,6 +1,6 @@
 import ObsidianMochiPlugin from "src/main";
 import { requestUrl, Notice } from "obsidian";
-import { MochiDeckItem, SimplifiedDeck } from "src/interfaces";
+import {  SimplifiedDeck } from "src/interfaces";
 export default class Mochi {
 	private plugin: ObsidianMochiPlugin;
 

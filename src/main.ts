@@ -1,4 +1,4 @@
-import { Editor, MarkdownView, Notice, Plugin } from "obsidian";
+import { Plugin } from "obsidian";
 import { DBData, PluginSettingsFields } from "./interfaces";
 import PluginSettings, { DEFAULT_SETTINGS } from "./helperClasses/settings";
 import { Low } from "lowdb";

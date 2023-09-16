@@ -1,6 +1,5 @@
 import ObsidianMochiPlugin from "src/main";
-import { Notice } from "obsidian";
-import { Flashcard, ExtractedFlashcard } from "src/interfaces";
+import {  ExtractedFlashcard } from "src/interfaces";
 export default class Flashcards {
 	private plugin: ObsidianMochiPlugin;
 
