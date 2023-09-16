@@ -3,7 +3,7 @@
 	"name": "Obsidian + Mochi Flashcards",
 	"version": "1.0.0",
 	"minAppVersion": "0.15.0",
-	"description": "This is a sample plugin for Obsidian. This plugin demonstrates some of the capabilities of the Obsidian API.",
+	"description": "A plugin that allows you to create yoru flashcards in Obsidian and use them in Mochi. It has the power to change your study workflow forever.",
 	"author": "Hristiyan Dimitrov",
 	"authorUrl": "https://hrsdimitrov.com",
 	"fundingUrl": "https://buy.stripe.com/bIYcMZ4FB5ORaacfZ1",
