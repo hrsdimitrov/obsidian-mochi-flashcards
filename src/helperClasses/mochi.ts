@@ -1,6 +1,6 @@
 import ObsidianMochiPlugin from "src/main";
 import { requestUrl, Notice } from "obsidian";
-import {  SimplifiedDeck } from "src/interfaces";
+import { SimplifiedDeck } from "src/interfaces";
 export default class Mochi {
 	private plugin: ObsidianMochiPlugin;
 
@@ -67,7 +67,6 @@ export default class Mochi {
 				method: "GET",
 			});
 		} catch (e) {
-			console.log(e);
 			new Notice(
 				"There was an error with the Mochi server when creating a deck"
 			);

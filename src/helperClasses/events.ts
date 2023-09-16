@@ -23,7 +23,6 @@ export default class Events {
 				newFlashcards
 			);
 			await this.plugin.db.read();
-			console.log(this.plugin.db.data);
 		});
 
 	onFileDelete = () => {
@@ -34,7 +33,6 @@ export default class Events {
 				}
 			}
 
-			console.log(this.plugin.db.data);
 		});
 	};
 }
