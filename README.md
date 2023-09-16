@@ -1,96 +1,62 @@
-# Obsidian Sample Plugin
+# Obsidian + Mochi Plugin
 
-This is a sample plugin for Obsidian (https://obsidian.md).
+Welcome to the Obsidian + Mochi Plugin. It's a small plugin I created so that I can write my flashcards where my all my notes are and then be able to revise them in Mochi - a flashcards application I love.
 
-This project uses Typescript to provide type checking and documentation.
-The repo depends on the latest plugin API (obsidian.d.ts) in Typescript Definition format, which contains TSDoc comments describing what it does.
+Please note that I am in no way associated with Obsidian or Mochi. This is a third-party plugin.
 
-**Note:** The Obsidian API is still in early alpha and is subject to change at any time!
+# Current features
 
-This sample plugin demonstrates some of the basic functionality the plugin API can do.
-- Adds a ribbon icon, which shows a Notice when clicked.
-- Adds a command "Open Sample Modal" which opens a Modal.
-- Adds a plugin setting tab to the settings page.
-- Registers a global click event and output 'click' to the console.
-- Registers a global interval which logs 'setInterval' to the console.
+As of right now the plugin doesn't have many features as it's only the first version. Here is what the current version includes:
 
-## First time developing plugins?
+-   single-line flashcards
+    -   full Markdown support
+    -   automatic modification/deletion detection
+    -   automatic sequential id generation
 
-Quick starting guide for new plugin devs:
+# The future
 
-- Check if [someone already developed a plugin for what you want](https://obsidian.md/plugins)! There might be an existing plugin similar enough that you can partner up with.
-- Make a copy of this repo as a template with the "Use this template" button (login to GitHub if you don't see it).
-- Clone your repo to a local development folder. For convenience, you can place this folder in your `.obsidian/plugins/your-plugin-name` folder.
-- Install NodeJS, then run `npm i` in the command line under your repo folder.
-- Run `npm run dev` to compile your plugin from `main.ts` to `main.js`.
-- Make changes to `main.ts` (or create new `.ts` files). Those changes should be automatically compiled into `main.js`.
-- Reload Obsidian to load the new version of your plugin.
-- Enable plugin in settings window.
-- For updates to the Obsidian API run `npm update` in the command line under your repo folder.
+I am hoping to add a lot more features in the future, starting with multi-line support. You can request features by sending me an email (contact@hrsdimitrov.com).
 
-## Releasing new releases
+# How to use the plugin
 
-- Update your `manifest.json` with your new version number, such as `1.0.1`, and the minimum Obsidian version required for your latest release.
-- Update your `versions.json` file with `"new-plugin-version": "minimum-obsidian-version"` so older versions of Obsidian can download an older version of your plugin that's compatible.
-- Create new GitHub release using your new version number as the "Tag version". Use the exact version number, don't include a prefix `v`. See here for an example: https://github.com/obsidianmd/obsidian-sample-plugin/releases
-- Upload the files `manifest.json`, `main.js`, `styles.css` as binary attachments. Note: The manifest.json file must be in two places, first the root path of your repository and also in the release.
-- Publish the release.
+## Initial configuration
 
-> You can simplify the version bump process by running `npm version patch`, `npm version minor` or `npm version major` after updating `minAppVersion` manually in `manifest.json`.
-> The command will bump version in `manifest.json` and `package.json`, and add the entry for the new version to `versions.json`
+To start using the plugin, you will need to configure two properties inside the plugin settings. The first one is the default name of the deck that flashcards without a specified deck will go to.
 
-## Adding your plugin to the community plugin list
+The second one is a Mochi API key used to access your Mochi account. You can create one inside the Mochi application under "Account Settings > API Keys".
 
-- Check https://github.com/obsidianmd/obsidian-releases/blob/master/plugin-review.md
-- Publish an initial version.
-- Make sure you have a `README.md` file in the root of your repo.
-- Make a pull request at https://github.com/obsidianmd/obsidian-releases to add your plugin.
+## Creating a flashcard
 
-## How to use
+To create a flashcard, you will have to use the "add a single-line flashcard" command by entering it in the Obsidian Command Palette. This will add a flashcard at the current position of your cursor. It will look something like that:
 
-- Clone this repo.
-- Make sure your NodeJS is at least v16 (`node --version`).
-- `npm i` or `yarn` to install dependencies.
-- `npm run dev` to start compilation in watch mode.
-
-## Manually installing the plugin
-
-- Copy over `main.js`, `styles.css`, `manifest.json` to your vault `VaultFolder/.obsidian/plugins/your-plugin-id/`.
-
-## Improve code quality with eslint (optional)
-- [ESLint](https://eslint.org/) is a tool that analyzes your code to quickly find problems. You can run ESLint against your plugin to find common bugs and ways to improve your code. 
-- To use eslint with this project, make sure to install eslint from terminal:
-  - `npm install -g eslint`
-- To use eslint to analyze this project use this command:
-  - `eslint main.ts`
-  - eslint will then create a report with suggestions for code improvement by file and line number.
-- If your source code is in a folder, such as `src`, you can use eslint with this command to analyze all files in that folder:
-  - `eslint .\src\`
-
-## Funding URL
-
-You can include funding URLs where people who use your plugin can financially support it.
-
-The simple way is to set the `fundingUrl` field to your link in your `manifest.json` file:
-
-```json
-{
-    "fundingUrl": "https://buymeacoffee.com"
-}
+```
+  (!#1) Question :: Answer
 ```
 
-If you have multiple URLs, you can also do:
+The `(!#1)` combination is used to make flashcards recognizable for the plugin. The number inside the parenthesis is the id of the flashcard. It is automatically generated by the plugin. It will make sure that the ids inside your vault are always sequential.
 
-```json
-{
-    "fundingUrl": {
-        "Buy Me a Coffee": "https://buymeacoffee.com",
-        "GitHub Sponsor": "https://github.com/sponsors",
-        "Patreon": "https://www.patreon.com/"
-    }
-}
-```
+The `::` combination is used to separate the question from the answer. Make sure to keep your flashcards on a single line only (line overflow doesn't count).
 
-## API Documentation
+!!! Please not that manually adding flashcards is not supported. It can only happen using the command mentioned above. It's the only way it will be registered in the database.
 
-See https://github.com/obsidianmd/obsidian-api
+## Modifying / Deleting a flashcard
+
+Every time you change the text inside a flashcard, the plugin will update the flashcard created in Mochi. If you delete the flashcard text entirely, the plugin will delete the Mochi flashcard. Deleting a file with flashcards will also result in all flashcards inside of it being deleted.
+
+## Specify a flashcard deck
+
+Each Obsidian file is treated as a collection of flashcards. If you want the flashcards in a file to go to different decks than the default one you specified in the plugin settings, you will need to add a page property named `f-deck`. As a text value you will be able to put the name of the deck you want your flashcards to go to.
+
+In the bellow examples, the deck name is changed to be `Knowledge Base / Computer Science`. The `/` indicates a nested Mochi deck. If the deck you specify doesn't exist, it will be automatically created.
+
+Here is an example:
+
+![Property Example](./images/property-example.png)
+
+# Storing information
+
+The plugin uses a simple JSON database file (obsidian-mochi-plugin.db) stored in the `.obsidian` folder of your vault to keep track of your flashcards. Even if you delete the plugin, keeping this file will allow you to get back to where you were when you last used it.
+
+# Bug Reports / Needed support
+
+If you want to report a bug or you need help using the Obsidian + Mochi plugin, you can contact me by sending me an email (contact@hrsdimitrov.com).
