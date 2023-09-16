@@ -1,6 +1,6 @@
 {
-	"id": "obsidian-mochi-flashcards",
-	"name": "Obsidian + Mochi Flashcards",
+	"id": "mochi-flashcards",
+	"name": "Mochi Flashcards",
 	"version": "1.0.0",
 	"minAppVersion": "0.15.0",
 	"description": "A plugin that allows you to create yoru flashcards in Obsidian and use them in Mochi. It has the power to change your study workflow forever.",
