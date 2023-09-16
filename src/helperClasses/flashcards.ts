@@ -52,6 +52,7 @@ export default class Flashcards {
 		question: string,
 		answer: string
 	) {
+		// update db instance
 		await this.plugin.db.read();
 
 		var flashcardIndex = this.plugin.db.data.flashcards.findIndex(
@@ -61,6 +62,15 @@ export default class Flashcards {
 		this.plugin.db.data.flashcards[flashcardIndex].deckName = deckName;
 		this.plugin.db.data.flashcards[flashcardIndex].question = question;
 		this.plugin.db.data.flashcards[flashcardIndex].answer = answer;
+
+		//update mochi instance
+		var mochiId = this.plugin.db.data.flashcards[flashcardIndex].mochiId;
+		await this.plugin.mochi.updateMochiFlashcard(
+			mochiId,
+			deckName,
+			question,
+			answer
+		);
 
 		await this.plugin.db.write();
 		await this.plugin.db.read();

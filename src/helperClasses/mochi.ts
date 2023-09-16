@@ -168,7 +168,37 @@ export default class Mochi {
 			return res.json.id;
 		} catch (e) {
 			new Notice(
-				"There was an error with the Mochi server when creating a deck"
+				"There was an error with the Mochi server when creating a flashcard."
+			);
+		}
+	}
+
+	async updateMochiFlashcard(
+		mochiId: string,
+		deckName: string,
+		question: string,
+		answer: string
+	) {
+		var deckId = await this.getDeckId(deckName);
+		var markdown = this.getMarkdown(question, answer);
+
+		try {
+			var res = await requestUrl({
+				url: "https://app.mochi.cards/api/cards/" + mochiId,
+				headers: {
+					Authorization: this.getAuthKey(
+						this.plugin.settings.mochiAPIKey
+					),
+					"Content-Type": "application/json",
+				},
+				body: JSON.stringify({ content: markdown, "deck-id": deckId }),
+				method: "POST",
+			});
+
+			return res.json.id;
+		} catch (e) {
+			new Notice(
+				"There was an error with the Mochi server when updating a flashcard."
 			);
 		}
 	}
