@@ -202,4 +202,23 @@ export default class Mochi {
 			);
 		}
 	}
+
+	async deleteMochiFlashcard(mochiId: string) {
+		try {
+			var res = await requestUrl({
+				url: "https://app.mochi.cards/api/cards/" + mochiId,
+				headers: {
+					Authorization: this.getAuthKey(
+						this.plugin.settings.mochiAPIKey
+					),
+					"Content-Type": "application/json",
+				},
+				method: "DELETE",
+			});
+		} catch (e) {
+			new Notice(
+				"There was an error with the Mochi server when deleting a flashcard."
+			);
+		}
+	}
 }

@@ -82,6 +82,10 @@ export default class Flashcards {
 		var flashcardIndex = this.plugin.db.data.flashcards.findIndex(
 			(flashcard) => (flashcard.id = id)
 		);
+
+		var mochiId = this.plugin.db.data.flashcards[flashcardIndex].mochiId;
+		await this.plugin.mochi.deleteMochiFlashcard(mochiId);
+
 		this.plugin.db.data.flashcards.splice(flashcardIndex, 1);
 
 		var idsIndex = this.plugin.db.data.ids.findIndex(

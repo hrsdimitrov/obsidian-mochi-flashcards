@@ -38,7 +38,8 @@ export default class ObsidianMochiPlugin extends Plugin {
 		this.addCommand(this.commands.addSingleLineFlashcard);
 
 		// add events
-		this.events.onFileModify()
+		this.events.onFileModify();
+		this.events.onFileDelete();
 
 		// add settings tabs
 		this.addSettingTab(new PluginSettings(this.app, this));

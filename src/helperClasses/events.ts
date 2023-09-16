@@ -1,4 +1,5 @@
 import ObsidianMochiPlugin from "src/main";
+import Flashcards from "./flashcards";
 
 export default class Events {
 	private plugin: ObsidianMochiPlugin;
@@ -25,4 +26,16 @@ export default class Events {
 			await this.plugin.db.read();
 			console.log(this.plugin.db.data);
 		});
+
+	onFileDelete = () => {
+		this.plugin.app.vault.on("delete", async (file) => {
+			for (const flashcard of this.plugin.db.data.flashcards) {
+				if (flashcard.filePath === file.path) {
+					await this.plugin.flashcards.deleteFlashcard(flashcard.id);
+				}
+			}
+
+			console.log(this.plugin.db.data);
+		});
+	};
 }
